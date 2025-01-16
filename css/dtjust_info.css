@@ -302,24 +302,36 @@ body {
 
 
 /* -----------footer-----------*/
-main div ul{
-    list-style: none;
+
+main ul {
+    margin: 0; 
     padding: 0;
+    list-style: none; 
     display: flex;
     margin-left: 100px;
+    margin-top: 30px;
 }
-main div ul li{
-    margin: 30px 4px;
+
+main li {
+    margin: 0;
+    padding: 0;
 }
-main div ul li a{
+
+main li span {
+    margin: 0 10px;
+    font-size: 10px;
+}
+
+main li a {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
     color: black;
     font-size: 12px;
 }
+
 main div ul li a:hover{
     color: #009751;
-}
-main div ul li span{
-    font-size: 10px;
 }
 #coll_rolex{
     color: #009751;
@@ -329,6 +341,7 @@ main div ul li span{
     align-items: center;
     margin-left: 100px;
     transition: transform 0.5s, fill 0.5s;
+    margin-top: 40px;
 }
 .social-share p{
     margin-right: 30px;
@@ -417,8 +430,8 @@ main div ul li span{
     .social-share{
       margin-left: 50px;
     }
-    main div ul{
-      margin-left: 50px;
+    main ul {
+        margin-left: 50px;
     }
 
 }
