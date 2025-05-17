@@ -3,22 +3,33 @@
 require_once __DIR__ . '/../config/connexion_db.php';
 require_once __DIR__ . '/../model/commande/Commande.php';
 
-class WatchController {
+class CommandController {
     private $db;
     private $commandeModel;
 
     public function __construct() {
-        $this->db = (new DatabaseConnection())->connect();
+        // Utiliser le singleton
+        $this->db = DatabaseConnection::getInstance()->getConnection();
         $this->commandeModel = new Commande($this->db);
     }
 
     public function Affiche_Commande() {
         try {
             $orders = $this->commandeModel->getCommande();
-            include __DIR__ . '/../Views/order/display_orders.php';
+            return $orders;
         } catch (Exception $e) {
             $error = $e->getMessage();
-            include __DIR__ . '/../Views/order/display_orders.php';
+        } finally {
+            $this->db = null; // Fermer la connexion
+        }
+    }
+
+    public function Affiche_Commande_id($id) {
+        try {
+            $orders = $this->commandeModel->getCommandeId($id);
+            return $orders;
+        } finally {
+            $this->db = null;
         }
     }
 
@@ -26,10 +37,10 @@ class WatchController {
         try {
             $this->commandeModel->deleteCommande($order_id);
             $message = "Order with ID $order_id deleted successfully!";
-            include __DIR__ . '/../Views/order/delete_order_result.php';
         } catch (Exception $e) {
             $error = $e->getMessage();
-            include __DIR__ . '/../Views/order/delete_order_result.php';
+        } finally {
+            $this->db = null;
         }
     }
 
@@ -37,12 +48,11 @@ class WatchController {
         try {
             $this->commandeModel->validateCommande($order_id);
             $message = "Your order is validated successfully and will be received in 30 days.";
-            include __DIR__ . '/../Views/order/validate_order_result.php';
         } catch (Exception $e) {
             $error = $e->getMessage();
-            include __DIR__ . '/../Views/order/validate_order_result.php';
+        } finally {
+            $this->db = null;
         }
     }
 }
-
 ?>

@@ -8,7 +8,8 @@ class AdminController {
     private $adminModel;
 
     public function __construct() {
-        $this->db = (new DatabaseConnection())->connect();
+        // Singleton pour éviter les connexions multiples
+        $this->db = DatabaseConnection::getInstance()->getConnection();
         $this->adminModel = new Admin($this->db);
     }
 
@@ -20,6 +21,8 @@ class AdminController {
         } catch (Exception $e) {
             $message = $e->getMessage();
             include __DIR__ . '/../Views/admin/create_table_result.php';
+        } finally {
+            $this->db = null; // Fermer la connexion
         }
     }
 
@@ -31,6 +34,8 @@ class AdminController {
         } catch (Exception $e) {
             $message = $e->getMessage();
             include __DIR__ . '/../Views/admin/add_admin_result.php';
+        } finally {
+            $this->db = null;
         }
     }
 
@@ -42,6 +47,8 @@ class AdminController {
         } catch (Exception $e) {
             $message = $e->getMessage();
             include __DIR__ . '/../Views/admin/delete_admin_result.php';
+        } finally {
+            $this->db = null;
         }
     }
 }

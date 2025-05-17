@@ -42,6 +42,17 @@ class Commande {
         }
     }
 
+    public function getCommandeId($id) {
+        try {
+            $sql = "SELECT * FROM commande WHERE id=?";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching orders: " . $e->getMessage());
+        }
+    }
+
     public function deleteCommande($order_id) {
         try {
             $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM commande WHERE id = ?");
