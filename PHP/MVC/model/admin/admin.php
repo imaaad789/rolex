@@ -108,6 +108,17 @@
                 return "Error deleting admin: " . $e->getMessage();
             }
         }
+        public function updateAdminPassword($email, $new_password) {
+            try {
+                $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
+                $sql = "UPDATE admin SET password = ? WHERE email = ?";
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([$hashed_password, $email]);
+                return "Password updated successfully for $email!";
+            } catch (PDOException $e) {
+                throw new Exception("Error updating password: " . $e->getMessage());
+            }
+        }
     }
 
 ?>

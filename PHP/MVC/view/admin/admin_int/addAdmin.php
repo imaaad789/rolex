@@ -50,7 +50,7 @@ class InterfaceAddAdmin {
                     }
 
                     // Validate image extension
-                    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+                    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif','jfif'];
                     $file_extension = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
                     if (!in_array($file_extension, $allowed_extensions)) {
                         throw new Exception("Extension de fichier non autorisée. Seuls les fichiers JPG, JPEG, PNG et GIF sont acceptés.");

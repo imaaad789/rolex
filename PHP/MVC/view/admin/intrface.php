@@ -18,7 +18,9 @@ if (isset($_GET['url'])) {
             header("location:admin_int/afficheAdmin.php");
             break;
 
-        
+        case 'Profil':
+            header("location:../Profiels/Profiels.php");
+            break;
         case 'afficheCommande':
             header("location:commande/affichage.php");
             break;
@@ -349,9 +351,9 @@ if (isset($_GET['url'])) {
                         <span>CEO ROLEX</span>
                     </button>
                     <div class="dropdown-content" id="userDropdown">
-                        <a href="#" id="profile"><i class="fas fa-user-circle"></i> Profile</a>
+                        <a href="../Profiels/Profiels.php" id="profile"><i class="fas fa-user-circle"></i> Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a href="/index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        <a href="../../../../index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
             </div>
@@ -378,7 +380,7 @@ if (isset($_GET['url'])) {
                 </ul>
             </li>
             <li><a href="/contact">Client</a></li>
-            <li><a href="/signup">Profil</a></li>
+            <li><a href="intrface.php?url=Profil">Profil</a></li>
             <li><a href="/login" id="adminLink">Settings</a>
                 <ul id="adminSubmenu">
                     <li><a href="intrface.php?url=afficheAdmin">Affiche admin</a></li>

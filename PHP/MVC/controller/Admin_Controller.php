@@ -51,6 +51,15 @@ class AdminController {
             $this->db = null;
         }
     }
+    public function updateAdminPassword($email, $new_password) {
+        try {
+            $this->adminModel->updateAdminPassword($email, $new_password);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        } finally {
+            $this->db = null;
+        }
+    }
 }
 
 ?>
