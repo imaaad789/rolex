@@ -8,7 +8,6 @@ class AdminController {
     private $adminModel;
 
     public function __construct() {
-        // Singleton pour éviter les connexions multiples
         $this->db = DatabaseConnection::getInstance()->getConnection();
         $this->adminModel = new Admin($this->db);
     }
@@ -16,24 +15,28 @@ class AdminController {
     public function createTable() {
         try {
             $this->adminModel->createTable();
-            $message = "Table 'admin' created successfully!";
-            include __DIR__ . '/../Views/admin/create_table_result.php';
         } catch (Exception $e) {
-            $message = $e->getMessage();
-            include __DIR__ . '/../Views/admin/create_table_result.php';
+            echo $e->getMessage();
         } finally {
-            $this->db = null; // Fermer la connexion
+            $this->db = null; 
         }
     }
 
+    public function afficheAdmin(){
+        try{
+            $affichage=$this->adminModel->getAdmin();
+            return $affichage;
+        }catch(Exception $e){
+            echo $e->getMessage();
+        } finally {
+            $this->db = null; 
+        }
+    }
     public function addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image = null) {
         try {
             $this->adminModel->addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image);
-            $message = "Admin $email added successfully!";
-            include __DIR__ . '/../Views/admin/add_admin_result.php';
         } catch (Exception $e) {
-            $message = $e->getMessage();
-            include __DIR__ . '/../Views/admin/add_admin_result.php';
+            echo $e->getMessage();
         } finally {
             $this->db = null;
         }
@@ -42,11 +45,8 @@ class AdminController {
     public function deleteAdmin($email) {
         try {
             $this->adminModel->deleteAdmin($email);
-            $message = "Admin with email $email deleted successfully!";
-            include __DIR__ . '/../Views/admin/delete_admin_result.php';
         } catch (Exception $e) {
-            $message = $e->getMessage();
-            include __DIR__ . '/../Views/admin/delete_admin_result.php';
+            echo $e->getMessage();
         } finally {
             $this->db = null;
         }

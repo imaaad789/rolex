@@ -8,9 +8,21 @@ if (isset($_GET['url'])) {
     $url = $_GET['url'];
 
     switch ($url) {
+        case 'ajouteAdmin':
+            header("location:admin_int/addAdmin.php");
+            break;
+        case 'supprimeAdmin':
+            header("location:admin_int/deleteAdmin.php");
+            break;
+        case 'afficheAdmin':
+            header("location:admin_int/afficheAdmin.php");
+            break;
+
+        
         case 'afficheCommande':
             header("location:commande/affichage.php");
             break;
+        
         case 'validationCommande':
             require_once 'PHP/MVC/view/admin/commande/validationCommande.php';
             break;
@@ -367,7 +379,13 @@ if (isset($_GET['url'])) {
             </li>
             <li><a href="/contact">Client</a></li>
             <li><a href="/signup">Profil</a></li>
-            <li><a href="/login">Settings</a></li>
+            <li><a href="/login" id="adminLink">Settings</a>
+                <ul id="adminSubmenu">
+                    <li><a href="intrface.php?url=afficheAdmin">Affiche admin</a></li>
+                    <li><a href="intrface.php?url=supprimeAdmin">Supprime Admin</a></li>
+                    <li><a href="intrface.php?url=ajouteAdmin">Ajoute Admin</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 

@@ -51,27 +51,33 @@
                 return "Error creating table or adding default admin: " . $e->getMessage();
             }
         }
-        
-        // Add admin 
+        public function getAdmin() {
+        try {
+            $sql = "SELECT * FROM admin";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Error fetching orders: " . $e->getMessage());
+        }
+    }
         public function addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image = null) {
             try {
-                // Validate required fields
                 if (empty($nom) || empty($prenom) || empty($email) || empty($date_naissance) || empty($plain_password)) {
                     return "Error: All required fields (nom, prenom, email, date_naissance, password) must be provided.";
                 }
                 if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
                     return "Error: Invalid email format.";
                 }
-                // Check if email already exists
+
                 $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM admin WHERE email = ?");
                 $stmt->execute([$email]);
                 if ($stmt->fetch(PDO::FETCH_ASSOC)['count'] > 0) {
                     return "Error: Email $email already exists.";
                 }
-                // Hash the password
+
                 $hashed_password=password_hash($plain_password,PASSWORD_BCRYPT);
 
-                // Insert the admin
                 $sql = "INSERT INTO admin (nom, prenom, email, date_naissance, password, profile_image)
                         VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = $this->conn->prepare($sql);

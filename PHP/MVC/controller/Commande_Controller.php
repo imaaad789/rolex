@@ -20,7 +20,7 @@ class CommandController {
         } catch (Exception $e) {
             $error = $e->getMessage();
         } finally {
-            $this->db = null; // Fermer la connexion
+            $this->db = null;
         }
     }
 
