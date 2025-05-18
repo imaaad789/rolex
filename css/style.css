@@ -862,3 +862,65 @@ section div ul li span{
     clip-path: inset(0 0 0 0);
   }
 }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
+  transition: left 0.3s ease-in-out;
+  padding: 2rem;
+  z-index: 1001;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.close-btn {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #1e293b;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+
+.nav-links2 {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-links2 li {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.nav-links2 a {
+  text-decoration: none;
+  color: #1e293b;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  display: block;
+  text-align: left;
+}
+
+.nav-links2 a:hover {
+    color: #13422d;
+    transform: translateX(-5px);
+}
+
+.nav-links2 ul {
+    display: none;
+    padding-left: 1rem;
+}
+
+.nav-links2 ul li {
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #4a5568;
+}

@@ -110,45 +110,45 @@ if (!class_exists('Modifier_par_Formulaire')) {
                             <div class="alert <?php echo $this->message_type; ?>"><?php echo $this->message; ?></div>
                         <?php endif; ?>
                         <form method="POST" action="modifier_Formulaire.php?url=valideCommande">
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($this->para[$id-1]['id']); ?>">
+                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($this->para[0]['id']); ?>">
                             <div class="mb-3">
                                 <label for="nom" class="form-label">Nom</label>
-                                <input type="text" class="form-control" id="nom" name="nom" value="<?php echo htmlspecialchars($this->para[$id-1]['nom']); ?>" required>
+                                <input type="text" class="form-control" id="nom" name="nom" value="<?php echo htmlspecialchars($this->para[0]['nom']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="prenom" class="form-label">Prénom</label>
-                                <input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo htmlspecialchars($this->para[$id-1]['prenom']); ?>" required>
+                                <input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo htmlspecialchars($this->para[0]['prenom']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($this->para[$id-1]['email']); ?>" required>
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($this->para[0]['email']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="adress" class="form-label">Adresse</label>
-                                <input type="text" class="form-control" id="adress" name="adress" value="<?php echo htmlspecialchars($this->para[$id-1]['adress']); ?>" required>
+                                <input type="text" class="form-control" id="adress" name="adress" value="<?php echo htmlspecialchars($this->para[0]['adress']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="ville" class="form-label">Ville</label>
-                                <input type="text" class="form-control" id="ville" name="ville" value="<?php echo htmlspecialchars($this->para[$id-1]['ville']); ?>" required>
+                                <input type="text" class="form-control" id="ville" name="ville" value="<?php echo htmlspecialchars($this->para[0]['ville']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="code_postal" class="form-label">Code Postal</label>
-                                <input type="text" class="form-control" id="code_postal" name="code_postal" value="<?php echo htmlspecialchars($this->para[$id-1]['code_postal']); ?>" required>
+                                <input type="text" class="form-control" id="code_postal" name="code_postal" value="<?php echo htmlspecialchars($this->para[0]['code_postal']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="numero_telephone" class="form-label">N° Téléphone</label>
-                                <input type="text" class="form-control" id="numero_telephone" name="numero_telephone" value="<?php echo htmlspecialchars($this->para[$id-1]['numero_telephone']); ?>" required>
+                                <input type="text" class="form-control" id="numero_telephone" name="numero_telephone" value="<?php echo htmlspecialchars($this->para[0]['numero_telephone']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="reference_number" class="form-label">Référence</label>
-                                <input type="text" class="form-control" id="reference_number" name="reference_number" value="<?php echo htmlspecialchars($this->para[$id-1]['reference_number']); ?>" required>
+                                <input type="text" class="form-control" id="reference_number" name="reference_number" value="<?php echo htmlspecialchars($this->para[0]['reference_number']); ?>" required>
                             </div>
                             <div class="mb-3">
                                 <label for="type_paiement" class="form-label">Type de Paiement</label>
                                 <select class="form-select" id="type_paiement" name="type_paiement" required>
-                                    <option value="MasterCard" <?php echo $this->para[$id-1]['type_paiement'] === 'MasterCard' ? 'selected' : ''; ?>>MasterCard</option>
-                                    <option value="Visa" <?php echo $this->para[$id-1]['type_paiement'] === 'Visa' ? 'selected' : ''; ?>>Visa</option>
-                                    <option value="Apple Pay" <?php echo $this->para[$id-1]['type_paiement'] === 'Apple Pay' ? 'selected' : ''; ?>>Apple Pay</option>
+                                    <option value="MasterCard" <?php echo $this->para[0]['type_paiement'] === 'MasterCard' ? 'selected' : ''; ?>>MasterCard</option>
+                                    <option value="Visa" <?php echo $this->para[0]['type_paiement'] === 'Visa' ? 'selected' : ''; ?>>Visa</option>
+                                    <option value="Apple Pay" <?php echo $this->para[0]['type_paiement'] === 'Apple Pay' ? 'selected' : ''; ?>>Apple Pay</option>
                                 </select>
                             </div>
                             <div class="d-flex justify-content-between">

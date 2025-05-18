@@ -44,10 +44,11 @@ class CommandController {
         }
     }
 
-    public function Validation_Commande($order_id) {
+    public function Validation_Commande($nom,$prenom,$email,$adress,$ville,$code_postal,$numero_telephone,$reference_number,$type_paiement) {
         try {
-            $this->commandeModel->validateCommande($order_id);
-            $message = "Your order is validated successfully and will be received in 30 days.";
+            $this->commandeModel->InsetCommand($nom,$prenom,$email,$adress,$ville,$code_postal,$numero_telephone,$reference_number,$type_paiement);
+            $message = "Votre commande est validée avec succès et sera reçue dans 30 jours.";
+            return $message;
         } catch (Exception $e) {
             $error = $e->getMessage();
         } finally {

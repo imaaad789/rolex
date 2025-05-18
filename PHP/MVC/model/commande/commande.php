@@ -21,8 +21,7 @@ class Commande {
                 numero_telephone VARCHAR(20) NOT NULL,
                 reference_number VARCHAR(50) NOT NULL,
                 type_paiement ENUM('MasterCard', 'Visa', 'Apple Pay') NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (reference_number) REFERENCES watches(reference_number) ON DELETE RESTRICT ON UPDATE CASCADE
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
             $this->conn->exec($sql);
             return true;
@@ -70,40 +69,31 @@ class Commande {
         }
     }
 
-    public function validateCommande($order_id) {
+
+    public function InsetCommand($nom,$prenom,$email,$adress,$ville,$code_postal,$numero_telephone,$reference_number,$type_paiement) {
         try {
-            $stmt = $this->conn->prepare("SELECT nom, prenom, email, adress, ville, code_postal, numero_telephone, reference_number, type_paiement 
-                                        FROM commande 
-                                        WHERE id = ?");
-            $stmt->execute([$order_id]);
-            $order = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            if (!$order) {
-                throw new Exception("No order found with ID $order_id.");
-            }
-
-            $required_fields = ['nom', 'prenom', 'email', 'adress', 'ville', 'code_postal', 'numero_telephone', 'reference_number', 'type_paiement'];
+            $required_fields = ['nom','prenom','email','adress','ville','code_postal','numero_telephone','reference_number','type_paiement'];
             foreach ($required_fields as $field) {
-                if (empty($order[$field])) {
-                    throw new Exception("Missing or invalid $field in order ID $order_id.");
+                if (empty($$field)) {
+                    throw new Exception("Manquant ou invalide $field.");
                 }
             }
 
-            if (!filter_var($order['email'], FILTER_VALIDATE_EMAIL)) {
-                throw new Exception("Invalid email format in order ID $order_id.");
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception("Invalid email format.");
             }
 
-            $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM watches WHERE reference_number = ?");
-            $stmt->execute([$order['reference_number']]);
-            if ($stmt->fetch(PDO::FETCH_ASSOC)['count'] == 0) {
-                throw new Exception("Invalid reference_number {$order['reference_number']} in order ID $order_id.");
-            }
+            $sql = "INSERT INTO commande (nom, prenom, email, adress, ville, code_postal, numero_telephone, reference_number, type_paiement, created_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$nom, $prenom, $email, $adress, $ville, $code_postal, $numero_telephone, $reference_number, $type_paiement]);
 
-            return true;
+            return "Commande enregistrée avec succès pour l'order ID " . $this->conn->lastInsertId() . ".";
         } catch (PDOException $e) {
-            throw new Exception("Error validating order: " . $e->getMessage());
+            throw new Exception("Erreur lors de l'enregistrement de la commande : " . $e->getMessage());
         }
     }
+
 }
 
 ?>
