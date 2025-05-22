@@ -1,5 +1,6 @@
 <?php
     require_once __DIR__ . '/../../../controller/Commande_Controller.php';
+    require_once __DIR__ . '/../../../../init_db.php';
 
     if(isset($_GET['url']) && !empty($_GET['url'])){
         $nom=$_POST['nom'];
@@ -9,6 +10,7 @@
         $ville=$_POST['ville'];
         $code_postal=$_POST['code_postal'];
         $numero_telephone=$_POST['numero_telephone'];
+        
         $reference_number=$_POST['reference_number'];
         $type_paiement=$_POST['type_paiement'];
         $commandeController = new CommandController();

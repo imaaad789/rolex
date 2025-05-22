@@ -39,7 +39,7 @@
                             'email' => 'admin2@rolex.com',
                             'date_naissance' => '2005-08-11',
                             'password' => 'admin123',
-                            'profile_image' => '/images/crown-silver.png'
+                            'profile_image' => '/images/crown-gold.png'
                         ],
                         [
                             'nom' => 'belgnaou',
@@ -47,7 +47,7 @@
                             'email' => 'admin3@rolex.com',
                             'date_naissance' => '2001-07-22',
                             'password' => 'admin123',
-                            'profile_image' => '/images/crown-bronze.png'
+                            'profile_image' => '/images/crown-gold.png'
                         ],
                         [
                             'nom' => 'Najimi',
@@ -55,7 +55,7 @@
                             'email' => 'admin4@rolex.com',
                             'date_naissance' => '2004-09-09',
                             'password' => 'admin123',
-                            'profile_image' => '/images/crown-platinum.png'
+                            'profile_image' => '/images/crown-gold.png'
                         ]
                     ];
 
