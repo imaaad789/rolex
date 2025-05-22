@@ -1,29 +1,29 @@
 <?php
-session_start(); // Start the session
+session_start();
 
 require_once __DIR__ . '/../../controller/Admin_Controller.php';
 
-$message = '';
-$message_type = '';
+$message='';
+$message_type='';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $adminController = new AdminController();
-    $email = trim($_POST['email'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-    $remember_me = isset($_POST['remember_me']);
+if ($_SERVER['REQUEST_METHOD']==='POST') {
+    $adminController=new AdminController();
+    $email=trim($_POST['email'] ?? '');
+    $password=trim($_POST['password'] ?? '');
+    $remember_me=isset($_POST['remember_me']);
 
     try {
-        $admins = $adminController->afficheAdmin();
-        $authenticated = false;
+        $admins=$adminController->afficheAdmin();
+        $authenticated=false;
 
         foreach ($admins as $admin) {
-            if ($admin['email'] === $email && password_verify($password, $admin['password'])) {
+            if ($admin['email']===$email && password_verify($password,$admin['password'])) {
                 $authenticated = true;
-                $_SESSION['admin_email'] = $email;
-                if ($remember_me) {
-                    setcookie('admin_email', $email, time() + (30 * 24 * 60 * 60), "/");
-                } else {
-                    setcookie('admin_email', '', time() - 3600, "/");
+                $_SESSION['admin_email']=$email;
+                if($remember_me){
+                    setcookie('admin_email',$email,time()+(30*24*60*60),"/");
+                }else{
+                    setcookie('admin_email','',time() - 3600,"/");
                 }
                 header("Location: ../admin/intrface.php");
                 exit();
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$preFilledEmail = $_COOKIE['admin_email'] ?? '';
+$preFilledEmail=$_COOKIE['admin_email'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -118,6 +118,9 @@ $preFilledEmail = $_COOKIE['admin_email'] ?? '';
     </style>
 </head>
 <body>
+    <?php
+        require_once __DIR__ . '/../../../init_db.php'
+    ?>
     <div class="login-card">
         <h2>Connexion Administrateur</h2>
         <?php if ($message): ?>

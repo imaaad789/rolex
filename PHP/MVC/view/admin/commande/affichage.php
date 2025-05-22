@@ -56,7 +56,7 @@ class InterfaceCommandeAffiche {
                     </thead>
                     <tbody>
                         <?php
-                        if (is_array($para) && count($para) > 0) {
+                        if (is_array($para) && count($para)>0) {
                             foreach ($para as $value) {
                                 ?>
                                 <tr>

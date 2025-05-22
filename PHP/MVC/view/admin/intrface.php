@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__.'/../../config/create_db.php';
 require_once __DIR__.'/../../config/helper.php';
+require_once __DIR__ . '/../../controller/Admin_Controller.php';
 
 $createDateBase = new Create_DateBase();
+$admin= new AdminController();
 
 if (isset($_GET['url'])) {
     $url = $_GET['url'];
@@ -34,18 +36,7 @@ if (isset($_GET['url'])) {
         case 'modifierCommande':
             header("location:commande/modifier.php");
             break;
-        case 'afficheHorloge':
-            require_once 'afficheHorloge.php';
-            break;
-        case 'validationHorloge':
-            require_once 'validationHorloge.php';
-            break;
-        case 'supprimeHorloge':
-            require_once 'supprimeHorloge.php';
-            break;
-        case 'modifierHorloge':
-            require_once 'modifierHorloge.php';
-            break;
+
         default:
             echo "<h1>Page not found</h1>";
             break;

@@ -29,9 +29,9 @@
                     $default_email="admin@rolex.com";
                     $default_date_naissance="2006-05-29";
                     $default_password="admin123";
-                    $default_profile_image="#";
+                    $default_profile_image='/images/crown-gold.png';
 
-                    $hashed_password = password_hash($default_password, PASSWORD_BCRYPT);
+                    $hashed_password=password_hash($default_password,PASSWORD_BCRYPT);
 
                     $sql = "INSERT INTO admin (nom, prenom, email, date_naissance, password, profile_image)
                             VALUES (?, ?, ?, ?, ?, ?)";
@@ -44,11 +44,11 @@
                         $hashed_password,
                         $default_profile_image
                     ]);
-                    return "Table 'admin' created and default admin ($default_email) added successfully!";
+                    return "La table «admin» a été créée et l'administrateur par défaut ($default_email) a été ajouté avec succès!";
                 }
-                return "Table 'admin' created or already exists. No default admin added.";
+                return "La table «admin» a été créée ou existe déjà. Aucun administrateur par défaut n'a été ajouté.";
             } catch (PDOException $e) {
-                return "Error creating table or adding default admin: " . $e->getMessage();
+                return "Erreur lors de la création de la table ou de l'ajout d'un administrateur par défaut: " . $e->getMessage();
             }
         }
         public function getAdmin() {
@@ -61,38 +61,40 @@
             throw new Exception("Error fetching orders: " . $e->getMessage());
         }
     }
-        public function addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image = null) {
+        public function addAdmin($nom,$prenom,$email,$date_naissance,$plain_password,$profile_image=null) {
             try {
                 if (empty($nom) || empty($prenom) || empty($email) || empty($date_naissance) || empty($plain_password)) {
-                    return "Error: All required fields (nom, prenom, email, date_naissance, password) must be provided.";
+                    return "Erreur : Tous les champs obligatoires (nom,prénom,email,date_naissance, mot de passe) doivent être renseignés.";
                 }
                 if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-                    return "Error: Invalid email format.";
+                    return "Erreur:format d'email non valide.";
                 }
 
                 $stmt = $this->conn->prepare("SELECT COUNT(*) as count FROM admin WHERE email = ?");
                 $stmt->execute([$email]);
                 if ($stmt->fetch(PDO::FETCH_ASSOC)['count'] > 0) {
-                    return "Error: Email $email already exists.";
+                    return "Erreur : l'email $email existe déjà.";
                 }
 
                 $hashed_password=password_hash($plain_password,PASSWORD_BCRYPT);
 
-                $sql = "INSERT INTO admin (nom, prenom, email, date_naissance, password, profile_image)
-                        VALUES (?, ?, ?, ?, ?, ?)";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute([
-                    $nom,
-                    $prenom,
-                    $email,
-                    $date_naissance,
-                    $hashed_password,
-                    $profile_image
-                ]);
+                $sql = "INSERT INTO admin (nom,prenom,email,date_naissance,password,profile_image)
+                        VALUES (:nom,:prenom,:email,:date_naissance,:password,:profile_image)";
 
-                return "Admin $email added successfully!";
+                $stmt = $this->conn->prepare($sql);
+
+                $stmt->bindParam(':nom',$nom);
+                $stmt->bindParam(':prenom',$prenom);
+                $stmt->bindParam(':email',$email);
+                $stmt->bindParam(':date_naissance',$date_naissance);
+                $stmt->bindParam(':password',$hashed_password);
+                $stmt->bindParam(':profile_image',$profile_image);
+
+                $stmt->execute();
+
+                return "L'administrateur $email a été ajouté avec succès!";
             } catch (PDOException $e) {
-                return "Error adding admin: " . $e->getMessage();
+                return "Erreur lors de l'ajout de l'administrateur: " . $e->getMessage();
             }
         }
 
@@ -103,9 +105,9 @@
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([$email]);
 
-                return "Admin with email $email deleted successfully!";
+                return "L'administrateur avec l'email $email a été supprimé avec succès!";
             } catch (PDOException $e) {
-                return "Error deleting admin: " . $e->getMessage();
+                return "Erreur lors de supprimé de l'administrateur: " . $e->getMessage();
             }
         }
         public function updateAdminPassword($email, $new_password) {
@@ -114,9 +116,9 @@
                 $sql = "UPDATE admin SET password = ? WHERE email = ?";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([$hashed_password, $email]);
-                return "Password updated successfully for $email!";
+                return "Mot de passe mis à jour avec succès pour $email!";
             } catch (PDOException $e) {
-                throw new Exception("Error updating password: " . $e->getMessage());
+                throw new Exception("Erreur lors de la mise à jour du mot de passe: " . $e->getMessage());
             }
         }
     }

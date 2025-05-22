@@ -1,5 +1,5 @@
 <?php
-session_start(); // Start the session
+session_start(); 
 
 require_once __DIR__ . '/../../controller/Admin_Controller.php';
 
@@ -10,22 +10,20 @@ class InterfaceProfiels {
     private $admin;
 
     public function __construct() {
-        // Check if admin is logged in
         if (!isset($_SESSION['admin_email'])) {
-            header("Location: ../login/login.php"); // Redirect to login page if not authenticated
+            header("Location: ../login/login.php");
             exit();
         }
 
         $this->adminController = new AdminController();
-        $this->fetchAdminProfile();
+        $this->AdminProfile();
 
-        // Handle password update
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_password'])) {
-            $this->handlePasswordUpdate();
+            $this->PasswordUpdate();
         }
     }
 
-    private function fetchAdminProfile() {
+    private function AdminProfile() {
         $admins = $this->adminController->afficheAdmin();
         $email = $_SESSION['admin_email'];
         foreach ($admins as $admin) {
@@ -40,36 +38,35 @@ class InterfaceProfiels {
         }
     }
 
-    private function handlePasswordUpdate() {
-        try {
-            $new_password = $_POST['new_password'] ?? '';
-            $confirm_password = $_POST['confirm_password'] ?? '';
+    private function PasswordUpdate() {
+        try{
+            $new_password=$_POST['new_password'] ?? '';
+            $confirm_password=$_POST['confirm_password'] ?? '';
 
-            if (empty($new_password) || empty($confirm_password)) {
+            if (empty($new_password) || empty($confirm_password)){
                 throw new Exception("Les champs de mot de passe ne peuvent pas être vides.");
             }
 
-            if ($new_password !== $confirm_password) {
+            if ($new_password !== $confirm_password){
                 throw new Exception("Les mots de passe ne correspondent pas.");
             }
 
-            if (strlen($new_password) < 6) {
+            if (strlen($new_password)<6){
                 throw new Exception("Le mot de passe doit contenir au moins 6 caractères.");
             }
 
-            $this->adminController->updateAdminPassword($this->admin['email'], $new_password);
-            $this->message = "Mot de passe mis à jour avec succès !";
-            $this->message_type = "alert-success";
+            $this->adminController->updateAdminPassword($this->admin['email'],$new_password);
+            $this->message="Mot de passe mis à jour avec succès !";
+            $this->message_type="alert-success";
         } catch (Exception $e) {
-            $this->message = "Erreur : " . $e->getMessage();
-            $this->message_type = "alert-danger";
+            $this->message="Erreur : " . $e->getMessage();
+            $this->message_type="alert-danger";
         }
     }
 
     public function displayInterface() {
-        // Set a cookie for the admin's email (valid for 30 days)
         if (!isset($_COOKIE['admin_email'])) {
-            setcookie('admin_email', $this->admin['email'], time() + (30 * 24 * 60 * 60), "/");
+            setcookie('admin_email',$this->admin['email'],time()+(2 * 60 * 60),"/");
         }
         ?>
         <!DOCTYPE html>
@@ -125,9 +122,7 @@ class InterfaceProfiels {
 
                     <?php if ($this->admin): ?>
                         <div class="text-center">
-                            <img src="<?php echo htmlspecialchars('../../public/' . $this->admin['profile_image'] ?? '/uploads/default.jpg'); ?>" 
-                                 class="profile-image" 
-                                 alt="Photo de profil">
+                            <img src="<?php echo htmlspecialchars('../../public/' . $this->admin['profile_image'] ?? '/images/default.jpg'); ?>" class="profile-image" alt="Photo de profil">
                         </div>
                         <h4 class="text-center"><?php echo htmlspecialchars($this->admin['nom'] . ' ' . $this->admin['prenom']); ?></h4>
                         <hr>

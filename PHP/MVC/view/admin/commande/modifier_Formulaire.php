@@ -55,16 +55,16 @@ if (!class_exists('Modifier_par_Formulaire')) {
                         throw new Exception("Erreur de préparation de la requête.");
                     }
 
-                    $stmt->bindParam(1, $nom);
-                    $stmt->bindParam(2, $prenom);
-                    $stmt->bindParam(3, $email);
-                    $stmt->bindParam(4, $adress);
-                    $stmt->bindParam(5, $ville);
-                    $stmt->bindParam(6, $code_postal);
-                    $stmt->bindParam(7, $numero_telephone);
-                    $stmt->bindParam(8, $reference_number);
-                    $stmt->bindParam(9, $type_paiement);
-                    $stmt->bindParam(10, $id);
+                    $stmt->bindParam(1,$nom);
+                    $stmt->bindParam(2,$prenom);
+                    $stmt->bindParam(3,$email);
+                    $stmt->bindParam(4,$adress);
+                    $stmt->bindParam(5,$ville);
+                    $stmt->bindParam(6,$code_postal);
+                    $stmt->bindParam(7,$numero_telephone);
+                    $stmt->bindParam(8,$reference_number);
+                    $stmt->bindParam(9,$type_paiement);
+                    $stmt->bindParam(10,$id);
 
                     if ($stmt->execute()) {
                         $this->message = "Commande mise à jour avec succès.";

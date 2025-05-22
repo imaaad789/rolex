@@ -8,8 +8,9 @@ class AdminController {
     private $adminModel;
 
     public function __construct() {
-        $this->db = DatabaseConnection::getInstance()->getConnection();
-        $this->adminModel = new Admin($this->db);
+        $this->db=DatabaseConnection::getInstance()->getConnection();
+        $this->adminModel=new Admin($this->db);
+        $this->createTable();
     }
 
     public function createTable() {
@@ -18,7 +19,7 @@ class AdminController {
         } catch (Exception $e) {
             echo $e->getMessage();
         } finally {
-            $this->db = null; 
+            $this->db=null; 
         }
     }
 
@@ -29,16 +30,16 @@ class AdminController {
         }catch(Exception $e){
             echo $e->getMessage();
         } finally {
-            $this->db = null; 
+            $this->db=null; 
         }
     }
-    public function addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image = null) {
+    public function addAdmin($nom,$prenom,$email,$date_naissance,$plain_password,$profile_image=null) {
         try {
-            $this->adminModel->addAdmin($nom, $prenom, $email, $date_naissance, $plain_password, $profile_image);
+            $this->adminModel->addAdmin($nom,$prenom,$email,$date_naissance,$plain_password,$profile_image);
         } catch (Exception $e) {
             echo $e->getMessage();
         } finally {
-            $this->db = null;
+            $this->db=null;
         }
     }
 
@@ -48,16 +49,16 @@ class AdminController {
         } catch (Exception $e) {
             echo $e->getMessage();
         } finally {
-            $this->db = null;
+            $this->db=null;
         }
     }
-    public function updateAdminPassword($email, $new_password) {
+    public function updateAdminPassword($email,$new_password) {
         try {
-            $this->adminModel->updateAdminPassword($email, $new_password);
+            $this->adminModel->updateAdminPassword($email,$new_password);
         } catch (Exception $e) {
             echo $e->getMessage();
         } finally {
-            $this->db = null;
+            $this->db=null;
         }
     }
 }
