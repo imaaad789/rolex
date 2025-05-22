@@ -24,28 +24,62 @@
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($result['count'] == 0) {
-                    $default_nom="Aimad";
-                    $default_prenom="Benjedi";
-                    $default_email="admin@rolex.com";
-                    $default_date_naissance="2006-05-29";
-                    $default_password="admin123";
-                    $default_profile_image='/images/crown-gold.png';
-
-                    $hashed_password=password_hash($default_password,PASSWORD_BCRYPT);
+                    $default_admins=[
+                        [
+                            'nom' => 'Aimad',
+                            'prenom' => 'Benjedi',
+                            'email' => 'admin1@rolex.com',
+                            'date_naissance' => '2006-05-29',
+                            'password' => 'admin123',
+                            'profile_image' => '/images/crown-gold.png'
+                        ],
+                        [
+                            'nom' => 'abouhamou',
+                            'prenom' => 'Marouane',
+                            'email' => 'admin2@rolex.com',
+                            'date_naissance' => '2005-08-11',
+                            'password' => 'admin123',
+                            'profile_image' => '/images/crown-silver.png'
+                        ],
+                        [
+                            'nom' => 'belgnaou',
+                            'prenom' => 'abdellah',
+                            'email' => 'admin3@rolex.com',
+                            'date_naissance' => '2001-07-22',
+                            'password' => 'admin123',
+                            'profile_image' => '/images/crown-bronze.png'
+                        ],
+                        [
+                            'nom' => 'Najimi',
+                            'prenom' => 'Youssef',
+                            'email' => 'admin4@rolex.com',
+                            'date_naissance' => '2004-09-09',
+                            'password' => 'admin123',
+                            'profile_image' => '/images/crown-platinum.png'
+                        ]
+                    ];
 
                     $sql = "INSERT INTO admin (nom, prenom, email, date_naissance, password, profile_image)
                             VALUES (?, ?, ?, ?, ?, ?)";
                     $stmt = $this->conn->prepare($sql);
-                    $stmt->execute([
-                        $default_nom,
-                        $default_prenom,
-                        $default_email,
-                        $default_date_naissance,
-                        $hashed_password,
-                        $default_profile_image
-                    ]);
-                    return "La table «admin» a été créée et l'administrateur par défaut ($default_email) a été ajouté avec succès!";
+                    
+                    $added_emails = [];
+                    foreach ($default_admins as $admin) {
+                        $hashed_password = password_hash($admin['password'], PASSWORD_BCRYPT);
+                        $stmt->execute([
+                            $admin['nom'],
+                            $admin['prenom'],
+                            $admin['email'],
+                            $admin['date_naissance'],
+                            $hashed_password,
+                            $admin['profile_image']
+                        ]);
+                        $added_emails[] = $admin['email'];
+                    }
+                    
+                    return "La table «admin» a été créée et les administrateurs par défaut (" . implode(', ', $added_emails) . ") ont été ajoutés avec succès!";
                 }
+
                 return "La table «admin» a été créée ou existe déjà. Aucun administrateur par défaut n'a été ajouté.";
             } catch (PDOException $e) {
                 return "Erreur lors de la création de la table ou de l'ajout d'un administrateur par défaut: " . $e->getMessage();
